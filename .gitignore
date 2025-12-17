@@ -38,5 +38,17 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Nx
 .nx/cache
 .nx/workspace-data
+
+# Prisma
+/generated/prisma
+
+
+# Vite and Vitest
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+
+# Environment variables
+.env
