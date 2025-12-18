@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@my-workspace/shared-dtos": ["libs/shared-dtos/src/index.ts"]
+      "@my-workspace/shared-dtos": ["libs/shared-dtos/src/index.ts"],
+      "@my-workspace/core": ["libs/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

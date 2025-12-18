@@ -46,4 +46,8 @@ export class DomainUserService {
   async hashPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 10);
   }
+
+  async searchUserByEmail(email: string): Promise<User> {
+    return await this.userRepository.searchUserByEmail(email);
+  }
 }

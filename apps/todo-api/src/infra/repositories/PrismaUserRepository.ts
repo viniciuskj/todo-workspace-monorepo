@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../../domain/entities/User';
 import { DomainUserRepository } from '../../domain/repositories/DomainUserRepository';
 import { PrismaService } from '../prisma/prisma.service';
+import { EntityNotFoundError } from '@my-workspace/core';
 
 @Injectable()
 export class PrismaUserRepository implements DomainUserRepository {
@@ -77,7 +78,7 @@ export class PrismaUserRepository implements DomainUserRepository {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new EntityNotFoundError('User not found');
     }
 
     return new User({
@@ -113,5 +114,32 @@ export class PrismaUserRepository implements DomainUserRepository {
           updatedAt: user.updatedAt,
         })
     );
+  }
+
+  async searchUserByEmail(email: string): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
+      where: { email: email },
+      select: {
+        identifier: true,
+        name: true,
+        email: true,
+        password: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
+      throw new EntityNotFoundError('User not found');
+    }
+
+    return new User({
+      identifier: user.identifier,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
   }
 }

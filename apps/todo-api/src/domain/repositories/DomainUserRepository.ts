@@ -5,4 +5,5 @@ export abstract class DomainUserRepository {
   abstract update(entity: User): Promise<User>;
   abstract readOne(identifier: string): Promise<User>;
   abstract readMany(): Promise<User[]>;
+  abstract searchUserByEmail(email: string): Promise<User>;
 }
