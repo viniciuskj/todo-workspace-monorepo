@@ -14,11 +14,13 @@ import { User } from '../../domain/entities/User';
 import { v4 as uuid } from 'uuid';
 import { UserRequest, UserResponse } from '@my-workspace/shared-dtos';
 import { userRequestSchema } from '@my-workspace/shared-dtos';
+import { Public } from '../../common/decorators/public.decorator';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: DomainUserService) {}
 
+  @Public()
   @Post()
   async createUser(
     @Body() userRequest: UserRequest,

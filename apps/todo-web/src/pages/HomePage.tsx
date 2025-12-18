@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { UserForm } from '../components/UserForm';
 import { UserCard } from '../components/UserCard';
 import { userClient } from '../client/user-client';
 import { UserRequest, UserResponse } from '@my-workspace/shared-dtos';
 
 export function HomePage() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const [users, setUsers] = useState<UserResponse[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [userIdentifierInput, setUserIdentifierInput] = useState('');
-  
+
   useEffect(() => {
     const fetchUsers = async () => {
       const usersResponse = await userClient.getUsers();
@@ -83,7 +87,7 @@ export function HomePage() {
     setLoading(true);
     setError(null);
     try {
-    const usersResponse = await userClient.getUsers();
+      const usersResponse = await userClient.getUsers();
       setUsers(usersResponse);
       setUserIdentifierInput('');
     } catch (err: any) {
@@ -94,11 +98,24 @@ export function HomePage() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        Todo App - Gerenciamento de Usuários
-      </h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Todo App - Gerenciamento de Usuários
+        </h1>
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+        >
+          Sair
+        </button>
+      </div>
 
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -128,7 +145,7 @@ export function HomePage() {
 
         <div className="bg-gray-100 p-6 rounded-lg">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Usuários</h2>
-          
+
           <div className="flex gap-2 mb-6">
             <input
               type="text"

@@ -1,6 +1,9 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+export const TOKEN_KEY = 'auth_token';
 
 class ApiClient {
   private client: AxiosInstance;
@@ -21,6 +24,10 @@ class ApiClient {
     // Request interceptor
     this.client.interceptors.request.use(
       (config) => {
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
       },
       (error) => {
@@ -33,7 +40,11 @@ class ApiClient {
       (response) => response,
       (error: AxiosError) => {
         if (error.response) {
-          console.error('Erro na resposta:', error.response.status, error.response.data);
+          console.error(
+            'Erro na resposta:',
+            error.response.status,
+            error.response.data
+          );
         } else if (error.request) {
           console.error('Erro na requisição:', error.request);
         } else {
