@@ -32,6 +32,10 @@ export class DomainUserService {
       updatedAt: new Date(),
     });
 
+    if (entity.password) {
+      updatedUser.password = await this.hashPassword(entity.password);
+    }
+
     return await this.userRepository.update(updatedUser);
   }
 
