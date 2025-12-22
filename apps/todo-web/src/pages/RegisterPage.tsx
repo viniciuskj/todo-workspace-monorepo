@@ -38,29 +38,29 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Todo App</h1>
-          <h2 className="text-2xl font-semibold text-gray-700">Criar nova conta</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <h1 className="text-4xl font-bold text-slate-100 mb-2">Todo App</h1>
+          <h2 className="text-2xl font-semibold text-slate-300">Criar nova conta</h2>
+          <p className="mt-2 text-sm text-slate-400">
             Já tem uma conta?{' '}
-            <Link to="/login" className="font-medium text-green-600 hover:text-green-500">
+            <Link to="/login" className="font-medium text-blue-400 hover:text-blue-300">
               Faça login
             </Link>
           </p>
         </div>
 
-        <div className="bg-white py-8 px-6 shadow-lg rounded-lg">
+        <div className="bg-slate-800 py-8 px-6 shadow-lg rounded-lg border border-slate-700">
           {error && (
-            <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
+            <div className="mb-4 bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-md">
               <p className="text-sm">{error}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
                 Nome
               </label>
               <input
@@ -71,13 +71,13 @@ export function RegisterPage() {
                 onChange={handleChange}
                 required
                 minLength={1}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
                 placeholder="Seu nome completo"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
                 Email
               </label>
               <input
@@ -87,13 +87,13 @@ export function RegisterPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
                 placeholder="seu@email.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
                 Senha
               </label>
               <input
@@ -104,10 +104,10 @@ export function RegisterPage() {
                 onChange={handleChange}
                 required
                 minLength={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
                 placeholder="Mínimo 3 caracteres"
               />
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-slate-400">
                 A senha deve ter no mínimo 3 caracteres
               </p>
             </div>
@@ -115,7 +115,7 @@ export function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2.5 px-4 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+              className="w-full py-2.5 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 disabled:bg-slate-600 disabled:cursor-not-allowed transition-colors"
             >
               {isLoading ? 'Criando conta...' : 'Criar conta'}
             </button>

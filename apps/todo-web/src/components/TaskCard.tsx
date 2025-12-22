@@ -29,8 +29,8 @@ export function TaskCard({
     <div
       className={`p-4 border rounded-lg transition-all ${
         task.completed
-          ? 'bg-green-50 border-green-300'
-          : 'bg-white border-gray-300 hover:border-blue-400'
+          ? 'bg-green-900 border-green-700'
+          : 'bg-slate-700 border-slate-600 hover:border-blue-500'
       }`}
     >
       <div className="flex items-start justify-between gap-4">
@@ -41,7 +41,7 @@ export function TaskCard({
             className={`mt-1 h-5 w-5 rounded border-2 flex items-center justify-center transition-colors disabled:cursor-not-allowed ${
               task.completed
                 ? 'bg-green-500 border-green-500'
-                : 'border-gray-300 hover:border-green-500'
+                : 'border-slate-400 hover:border-green-500'
             }`}
           >
             {task.completed && (
@@ -62,19 +62,19 @@ export function TaskCard({
           <div className="flex-1">
             <h3
               className={`text-lg font-semibold mb-1 ${
-                task.completed ? 'text-gray-500 line-through' : 'text-gray-800'
+                task.completed ? 'text-slate-400 line-through' : 'text-slate-100'
               }`}
             >
               {task.title}
             </h3>
             <p
               className={`text-sm mb-2 ${
-                task.completed ? 'text-gray-500' : 'text-gray-600'
+                task.completed ? 'text-slate-500' : 'text-slate-300'
               }`}
             >
               {task.description}
             </p>
-            <div className="flex gap-4 text-xs text-gray-500">
+            <div className="flex gap-4 text-xs text-slate-400">
               <span>Criada: {formatDate(task.createdAt)}</span>
               {task.updatedAt &&
                 new Date(task.updatedAt).getTime() !==
@@ -85,20 +85,22 @@ export function TaskCard({
           </div>
         </div>
 
-        <button
-          onClick={() => onEdit(task)}
-          disabled={disabled}
-          className="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Editar
-        </button>
-        <button
-          onClick={() => onDelete(task)}
-          disabled={disabled}
-          className="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Excluir
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => onEdit(task)}
+            disabled={disabled}
+            className="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Editar
+          </button>
+          <button
+            onClick={() => onDelete(task)}
+            disabled={disabled}
+            className="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Excluir
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ export function TaskForm({
       <div>
         <label
           htmlFor="title"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-slate-300 mb-1"
         >
           Título
         </label>
@@ -69,7 +69,7 @@ export function TaskForm({
           onChange={(e) => setTitle(e.target.value)}
           disabled={disabled}
           placeholder="Digite o título da tarefa"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 text-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-slate-800 disabled:cursor-not-allowed placeholder:text-slate-500"
           required
         />
       </div>
@@ -77,7 +77,7 @@ export function TaskForm({
       <div>
         <label
           htmlFor="description"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-slate-300 mb-1"
         >
           Descrição
         </label>
@@ -88,7 +88,7 @@ export function TaskForm({
           disabled={disabled}
           placeholder="Digite a descrição da tarefa"
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full px-3 py-2 bg-slate-700 border border-slate-600 text-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:bg-slate-800 disabled:cursor-not-allowed placeholder:text-slate-500"
           required
         />
       </div>
@@ -100,9 +100,9 @@ export function TaskForm({
           checked={completed}
           onChange={(e) => setCompleted(e.target.checked)}
           disabled={disabled}
-          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded disabled:cursor-not-allowed"
+          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-600 rounded bg-slate-700 disabled:cursor-not-allowed"
         />
-        <label htmlFor="completed" className="ml-2 block text-sm text-gray-700">
+        <label htmlFor="completed" className="ml-2 block text-sm text-slate-300">
           Marcar como concluída
         </label>
       </div>
@@ -110,7 +110,7 @@ export function TaskForm({
       <button
         type="submit"
         disabled={disabled}
-        className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {disabled ? 'Processando...' : submitLabel}
       </button>
