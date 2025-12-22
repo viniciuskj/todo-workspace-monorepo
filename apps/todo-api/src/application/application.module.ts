@@ -7,6 +7,8 @@ import { AuthGuard } from './auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthController } from './auth/controllers/AuthController';
 import { AuthService } from './auth.service';
+import { TaskController } from './controllers/TaskController';
+import { DomainTaskService } from '../domain/services/DomainTaskService';
 
 @Module({
   imports: [
@@ -16,9 +18,10 @@ import { AuthService } from './auth.service';
       secret: process.env.JWT_SECRET,
     }),
   ],
-  controllers: [UserController, AuthController],
+  controllers: [UserController, AuthController, TaskController],
   providers: [
     DomainUserService,
+    DomainTaskService,
     AuthService,
     {
       provide: APP_GUARD,

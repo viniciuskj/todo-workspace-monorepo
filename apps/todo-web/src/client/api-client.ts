@@ -35,7 +35,6 @@ class ApiClient {
       }
     );
 
-    // Response interceptor
     this.client.interceptors.response.use(
       (response) => response,
       (error: AxiosError) => {
@@ -45,6 +44,11 @@ class ApiClient {
             error.response.status,
             error.response.data
           );
+
+          if (error.response.status === 401) {
+            localStorage.removeItem(TOKEN_KEY);
+            window.location.href = '/login';
+          }
         } else if (error.request) {
           console.error('Erro na requisição:', error.request);
         } else {

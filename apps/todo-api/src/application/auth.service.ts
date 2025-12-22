@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './auth/model/JwtPayload';
 
-const expiresIn = '10s';
+const expiresIn = '1d';
 
 @Injectable()
 export class AuthService {

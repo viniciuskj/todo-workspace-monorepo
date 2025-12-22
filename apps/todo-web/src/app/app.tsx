@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '../contexts/AuthContext';
 import { PrivateRoute } from '../components/PrivateRoute';
-import { HomePage } from '../pages/HomePage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
+import { TasksPage } from '../pages/task/TasksPage';
 
 export function App() {
   return (
@@ -16,7 +16,7 @@ export function App() {
             path="/"
             element={
               <PrivateRoute>
-                <HomePage />
+                <TasksPage />
               </PrivateRoute>
             }
           />

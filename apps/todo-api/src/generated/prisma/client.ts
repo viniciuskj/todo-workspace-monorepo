@@ -42,3 +42,8 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
