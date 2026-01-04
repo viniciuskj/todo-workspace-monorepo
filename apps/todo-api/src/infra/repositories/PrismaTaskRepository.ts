@@ -6,10 +6,10 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PrismaTaskRepository implements DomainTaskRepository {
-  constructor(private readonly prismaSerivce: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async create(entity: Task): Promise<Task> {
-    const newTask = await this.prismaSerivce.task.create({
+    const newTask = await this.prismaService.task.create({
       data: {
         identifier: entity.identifier,
         title: entity.title,
@@ -38,7 +38,7 @@ export class PrismaTaskRepository implements DomainTaskRepository {
   }
 
   async update(entity: Task): Promise<Task> {
-    const updateTask = await this.prismaSerivce.task.update({
+    const updateTask = await this.prismaService.task.update({
       where: { identifier: entity.identifier },
       data: {
         title: entity.title,
@@ -66,7 +66,7 @@ export class PrismaTaskRepository implements DomainTaskRepository {
   }
 
   async readOne(identifier: string): Promise<Task> {
-    const task = await this.prismaSerivce.task.findUnique({
+    const task = await this.prismaService.task.findUnique({
       where: { identifier },
     });
 
@@ -85,7 +85,7 @@ export class PrismaTaskRepository implements DomainTaskRepository {
   }
 
   async readMany(userIdentifier: string): Promise<Task[]> {
-    const tasks = await this.prismaSerivce.task.findMany({
+    const tasks = await this.prismaService.task.findMany({
       where: { userIdentifier },
       orderBy: { createdAt: 'desc' },
     });
@@ -104,7 +104,7 @@ export class PrismaTaskRepository implements DomainTaskRepository {
   }
 
   async delete(identifier: string): Promise<void> {
-    await this.prismaSerivce.task.delete({
+    await this.prismaService.task.delete({
       where: { identifier },
     });
   }

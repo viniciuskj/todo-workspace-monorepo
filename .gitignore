@@ -43,7 +43,8 @@ Thumbs.db
 .nx/workspace-data
 
 # Prisma
-/generated/prisma
+**/generated/prisma
+**/prisma/generated
 
 
 # Vite and Vitest

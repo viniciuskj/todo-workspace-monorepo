@@ -9,26 +9,43 @@ datasource db {
 }
 
 model User {
-  identifier String   @id @default(uuid())
+  identifier String    @id @default(uuid())
   name       String
-  email      String   @unique
+  email      String    @unique
   password   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   tasks      Task[]
+  subTasks   SubTask[]
 
   @@map("users")
 }
 
 model Task {
+  identifier     String    @id @default(uuid())
+  title          String
+  description    String
+  completed      Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  user           User      @relation(fields: [userIdentifier], references: [identifier])
+  userIdentifier String
+  subTasks       SubTask[]
+
+  @@map("tasks")
+}
+
+model SubTask {
   identifier     String   @id @default(uuid())
   title          String
   description    String
   completed      Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  task           Task     @relation(fields: [taskIdentifier], references: [identifier])
+  taskIdentifier String
   user           User     @relation(fields: [userIdentifier], references: [identifier])
   userIdentifier String
 
-  @@map("tasks")
+  @@map("subtasks")
 }

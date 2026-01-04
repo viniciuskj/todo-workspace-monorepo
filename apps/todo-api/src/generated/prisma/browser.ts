@@ -27,3 +27,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Task = Prisma.TaskModel
+/**
+ * Model SubTask
+ * 
+ */
+export type SubTask = Prisma.SubTaskModel

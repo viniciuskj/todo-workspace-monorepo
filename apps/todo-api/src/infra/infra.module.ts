@@ -4,6 +4,8 @@ import { DomainUserRepository } from '../domain/repositories/DomainUserRepositor
 import { PrismaUserRepository } from './repositories/PrismaUserRepository';
 import { DomainTaskRepository } from '../domain/repositories/DomainTaskRepository';
 import { PrismaTaskRepository } from './repositories/PrismaTaskRepository';
+import { DomainSubTaskRepository } from '../domain/repositories/DomainSubTaskRepository';
+import { PrismaSubTaskRepository } from './repositories/PrismaSubTaskRepository';
 
 @Module({
   providers: [
@@ -16,7 +18,16 @@ import { PrismaTaskRepository } from './repositories/PrismaTaskRepository';
       provide: DomainTaskRepository,
       useClass: PrismaTaskRepository,
     },
+    {
+      provide: DomainSubTaskRepository,
+      useClass: PrismaSubTaskRepository,
+    },
   ],
-  exports: [PrismaService, DomainUserRepository, DomainTaskRepository],
+  exports: [
+    PrismaService,
+    DomainUserRepository,
+    DomainTaskRepository,
+    DomainSubTaskRepository,
+  ],
 })
 export class InfraModule {}

@@ -9,6 +9,8 @@ import { AuthController } from './auth/controllers/AuthController';
 import { AuthService } from './auth.service';
 import { TaskController } from './controllers/TaskController';
 import { DomainTaskService } from '../domain/services/DomainTaskService';
+import { SubTaskController } from './controllers/SubTaskController';
+import { DomainSubTaskService } from '../domain/services/DomainSubTaskService';
 
 @Module({
   imports: [
@@ -18,10 +20,16 @@ import { DomainTaskService } from '../domain/services/DomainTaskService';
       secret: process.env.JWT_SECRET,
     }),
   ],
-  controllers: [UserController, AuthController, TaskController],
+  controllers: [
+    UserController,
+    AuthController,
+    TaskController,
+    SubTaskController,
+  ],
   providers: [
     DomainUserService,
     DomainTaskService,
+    DomainSubTaskService,
     AuthService,
     {
       provide: APP_GUARD,
