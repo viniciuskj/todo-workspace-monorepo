@@ -1,4 +1,14 @@
-import { Body, Controller, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { DomainSubTaskService } from '../../domain/services/DomainSubTaskService';
 import {
   SubTaskRequest,
@@ -41,5 +51,75 @@ export class SubTaskController {
     };
 
     return res.status(HttpStatus.CREATED).json(subTaskResponse);
+  }
+
+  @Get()
+  async getSubTaskDetails(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Param('identifier') identifier: string
+  ): Promise<Response<SubTaskResponse>> {
+    const subTask = await this.subTaskService.readOne(identifier);
+
+    const subTaskResponse: SubTaskResponse = {
+      identifier: subTask.identifier,
+      title: subTask.title,
+      description: subTask.description,
+      completed: subTask.completed,
+      createdAt: subTask.createdAt,
+      updatedAt: subTask.updatedAt,
+    };
+
+    return res.status(HttpStatus.OK).json(subTaskResponse);
+  }
+
+  @Get(':identifier')
+  async getSubTasks(
+    @Req() req: Request,
+    @Res() res: Response
+  ): Promise<Response<SubTaskResponse>> {
+    const user = req.user;
+
+    const subTasks = await this.subTaskService.readMany(user.identifier);
+
+    const subTaskResponses: SubTaskResponse[] = subTasks.map((subTask) => ({
+      identifier: subTask.identifier,
+      title: subTask.title,
+      description: subTask.description,
+      completed: subTask.completed,
+      createdAt: subTask.createdAt,
+      updatedAt: subTask.updatedAt,
+    }));
+
+    return res.status(HttpStatus.OK).json(subTaskResponses);
+  }
+
+  @Put(':identifier')
+  async updateSubTask(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('identifier') identifier: string,
+    @Body() subTaskRequest: SubTaskRequest
+  ): Promise<Response<SubTaskResponse>> {
+    const validatedSubTaskRequest = subTaskRequestSchema.parse(subTaskRequest);
+
+    const subTask = await this.subTaskService.readOne(identifier);
+
+    subTask.title = validatedSubTaskRequest.title;
+    subTask.description = validatedSubTaskRequest.description;
+    subTask.completed = validatedSubTaskRequest.completed;
+
+    const updatedSubTask = await this.subTaskService.update(subTask);
+
+    const subTaskResponse: SubTaskResponse = {
+      identifier: updatedSubTask.identifier,
+      title: updatedSubTask.title,
+      description: updatedSubTask.description,
+      completed: updatedSubTask.completed,
+      createdAt: updatedSubTask.createdAt,
+      updatedAt: updatedSubTask.updatedAt,
+    };
+
+    return res.status(HttpStatus.OK).json(subTaskResponse);
   }
 }
