@@ -53,10 +53,9 @@ export class SubTaskController {
     return res.status(HttpStatus.CREATED).json(subTaskResponse);
   }
 
-  @Get()
+  @Get(':identifier')
   async getSubTaskDetails(
     @Res() res: Response,
-    @Req() req: Request,
     @Param('identifier') identifier: string
   ): Promise<Response<SubTaskResponse>> {
     const subTask = await this.subTaskService.readOne(identifier);
@@ -73,7 +72,7 @@ export class SubTaskController {
     return res.status(HttpStatus.OK).json(subTaskResponse);
   }
 
-  @Get(':identifier')
+  @Get()
   async getSubTasks(
     @Req() req: Request,
     @Res() res: Response
