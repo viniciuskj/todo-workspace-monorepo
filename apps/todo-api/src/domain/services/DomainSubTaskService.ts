@@ -13,7 +13,7 @@ export class DomainSubTaskService {
 
   async create(entity: SubTask): Promise<SubTask> {
     entity.validate();
-    const task = await this.taskService.readOne(entity.identifier);
+    const task = await this.taskService.readOne(entity.taskIdentifier);
 
     if (!task) {
       throw new Error('Task not found');

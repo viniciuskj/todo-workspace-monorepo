@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
@@ -77,14 +78,12 @@ export class SubTaskController {
     return res.status(HttpStatus.OK).json(subTaskResponse);
   }
 
-  @Get()
+  @Get('task/:taskIdentifier')
   async getSubTasks(
-    @Req() req: Request,
+    @Param('taskIdentifier') taskIdentifier: string,
     @Res() res: Response
   ): Promise<Response<SubTaskResponse>> {
-    const user = req.user;
-
-    const subTasks = await this.subTaskService.readMany(user.identifier);
+    const subTasks = await this.subTaskService.readMany(taskIdentifier);
 
     const subTaskResponses: SubTaskResponse[] = subTasks.map((subTask) => ({
       identifier: subTask.identifier,
@@ -126,5 +125,15 @@ export class SubTaskController {
     };
 
     return res.status(HttpStatus.OK).json(subTaskResponse);
+  }
+
+  @Delete(':identifier')
+  async deleteSubTask(
+    @Param('identifier') identifier: string,
+    @Res() res: Response
+  ): Promise<Response<void>> {
+    await this.subTaskService.delete(identifier);
+
+    return res.status(HttpStatus.NO_CONTENT).send();
   }
 }

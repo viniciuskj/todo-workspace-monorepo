@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { SubTaskRequest, SubTaskResponse, TaskResponse } from '@my-workspace/shared-dtos';
+import {
+  SubTaskRequest,
+  SubTaskResponse,
+  TaskResponse,
+} from '@my-workspace/shared-dtos';
 import { subTaskClient } from '../client/subtask-client';
 import { SubTaskCard } from './SubTaskCard';
 import { SubTaskForm } from './SubTaskForm';
@@ -13,7 +17,8 @@ interface SubTaskManagerProps {
 
 export function SubTaskManager({ task, isOpen, onClose }: SubTaskManagerProps) {
   const [subTasks, setSubTasks] = useState<SubTaskResponse[]>([]);
-  const [selectedSubTask, setSelectedSubTask] = useState<SubTaskResponse | null>(null);
+  const [selectedSubTask, setSelectedSubTask] =
+    useState<SubTaskResponse | null>(null);
   const [isSubTaskModalOpen, setIsSubTaskModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,10 +33,8 @@ export function SubTaskManager({ task, isOpen, onClose }: SubTaskManagerProps) {
     try {
       setIsLoading(true);
       setError(null);
-      const allSubTasks = await subTaskClient.getSubTasks();
-      // Filter subtasks for this specific task
-      // Note: Backend needs to support filtering by taskIdentifier or return it in response
-      setSubTasks(allSubTasks);
+      const taskSubTasks = await subTaskClient.getSubTasks(task.identifier);
+      setSubTasks(taskSubTasks);
     } catch (err) {
       setError('Erro ao carregar subtarefas');
       console.error('Error loading subtasks:', err);
@@ -84,12 +87,15 @@ export function SubTaskManager({ task, isOpen, onClose }: SubTaskManagerProps) {
     try {
       setIsLoading(true);
       setError(null);
-      const updatedSubTask = await subTaskClient.updateSubTask(subTask.identifier, {
-        title: subTask.title,
-        description: subTask.description,
-        completed: !subTask.completed,
-        taskIdentifier: task.identifier,
-      });
+      const updatedSubTask = await subTaskClient.updateSubTask(
+        subTask.identifier,
+        {
+          title: subTask.title,
+          description: subTask.description,
+          completed: !subTask.completed,
+          taskIdentifier: task.identifier,
+        }
+      );
       setSubTasks(
         subTasks.map((st) =>
           st.identifier === updatedSubTask.identifier ? updatedSubTask : st
@@ -110,7 +116,9 @@ export function SubTaskManager({ task, isOpen, onClose }: SubTaskManagerProps) {
       setIsLoading(true);
       setError(null);
       await subTaskClient.delete(subTask.identifier);
-      setSubTasks(subTasks.filter((st) => st.identifier !== subTask.identifier));
+      setSubTasks(
+        subTasks.filter((st) => st.identifier !== subTask.identifier)
+      );
     } catch (err) {
       setError('Erro ao excluir subtarefa');
       console.error('Error deleting subtask:', err);

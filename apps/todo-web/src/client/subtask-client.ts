@@ -4,7 +4,9 @@ import { SubTaskRequest, SubTaskResponse } from '@my-workspace/shared-dtos';
 export class SubTaskClient {
   private basePath = '/subtasks';
 
-  async createSubTask(subTaskRequest: SubTaskRequest): Promise<SubTaskResponse> {
+  async createSubTask(
+    subTaskRequest: SubTaskRequest
+  ): Promise<SubTaskResponse> {
     const response = await axiosInstance.post<SubTaskResponse>(
       this.basePath,
       subTaskRequest
@@ -30,8 +32,10 @@ export class SubTaskClient {
     return response.data;
   }
 
-  async getSubTasks(): Promise<SubTaskResponse[]> {
-    const response = await axiosInstance.get<SubTaskResponse[]>(this.basePath);
+  async getSubTasks(taskIdentifier: string): Promise<SubTaskResponse[]> {
+    const response = await axiosInstance.get<SubTaskResponse[]>(
+      `${this.basePath}/task/${taskIdentifier}`
+    );
     return response.data;
   }
 

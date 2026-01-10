@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { SubTask } from '../../domain/entities/SubTask';
 import { DomainSubTaskRepository } from '../../domain/repositories/DomainSubTaskRepository';
 import { PrismaService } from '../prisma/prisma.service';
 
+@Injectable()
 export class PrismaSubTaskRepository implements DomainSubTaskRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
