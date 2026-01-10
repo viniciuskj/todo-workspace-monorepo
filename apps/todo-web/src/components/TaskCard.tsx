@@ -5,6 +5,7 @@ interface TaskCardProps {
   onEdit: (task: TaskResponse) => void;
   onToggleComplete: (task: TaskResponse) => void;
   onDelete: (task: TaskResponse) => void;
+  onManageSubTasks?: (task: TaskResponse) => void;
   disabled?: boolean;
 }
 
@@ -13,6 +14,7 @@ export function TaskCard({
   onEdit,
   onDelete,
   onToggleComplete,
+  onManageSubTasks,
   disabled = false,
 }: TaskCardProps) {
   const formatDate = (date: Date) => {
@@ -62,7 +64,9 @@ export function TaskCard({
           <div className="flex-1">
             <h3
               className={`text-lg font-semibold mb-1 ${
-                task.completed ? 'text-slate-400 line-through' : 'text-slate-100'
+                task.completed
+                  ? 'text-slate-400 line-through'
+                  : 'text-slate-100'
               }`}
             >
               {task.title}
@@ -86,6 +90,15 @@ export function TaskCard({
         </div>
 
         <div className="flex gap-2">
+          {onManageSubTasks && (
+            <button
+              onClick={() => onManageSubTasks(task)}
+              disabled={disabled}
+              className="px-3 py-1 bg-purple-600 text-white text-sm rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Subtarefas
+            </button>
+          )}
           <button
             onClick={() => onEdit(task)}
             disabled={disabled}

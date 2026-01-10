@@ -39,15 +39,19 @@ export class SubTaskController {
       description: validatedSubTaskRequest.description,
       completed: validatedSubTaskRequest.completed,
       userIdentifier: user.identifier,
+      taskIdentifier: validatedSubTaskRequest.taskIdentifier,
     });
 
+    const createdSubTask = await this.subTaskService.create(newSubTask);
+
     const subTaskResponse: SubTaskResponse = {
-      identifier: newSubTask.identifier,
-      title: newSubTask.title,
-      description: newSubTask.description,
-      completed: newSubTask.completed,
-      createdAt: newSubTask.createdAt,
-      updatedAt: newSubTask.updatedAt,
+      identifier: createdSubTask.identifier,
+      title: createdSubTask.title,
+      description: createdSubTask.description,
+      taskIdentifier: createdSubTask.taskIdentifier,
+      completed: createdSubTask.completed,
+      createdAt: createdSubTask.createdAt,
+      updatedAt: createdSubTask.updatedAt,
     };
 
     return res.status(HttpStatus.CREATED).json(subTaskResponse);
@@ -64,6 +68,7 @@ export class SubTaskController {
       identifier: subTask.identifier,
       title: subTask.title,
       description: subTask.description,
+      taskIdentifier: subTask.taskIdentifier,
       completed: subTask.completed,
       createdAt: subTask.createdAt,
       updatedAt: subTask.updatedAt,
@@ -85,6 +90,7 @@ export class SubTaskController {
       identifier: subTask.identifier,
       title: subTask.title,
       description: subTask.description,
+      taskIdentifier: subTask.taskIdentifier,
       completed: subTask.completed,
       createdAt: subTask.createdAt,
       updatedAt: subTask.updatedAt,
@@ -95,7 +101,6 @@ export class SubTaskController {
 
   @Put(':identifier')
   async updateSubTask(
-    @Req() req: Request,
     @Res() res: Response,
     @Param('identifier') identifier: string,
     @Body() subTaskRequest: SubTaskRequest
@@ -114,6 +119,7 @@ export class SubTaskController {
       identifier: updatedSubTask.identifier,
       title: updatedSubTask.title,
       description: updatedSubTask.description,
+      taskIdentifier: updatedSubTask.taskIdentifier,
       completed: updatedSubTask.completed,
       createdAt: updatedSubTask.createdAt,
       updatedAt: updatedSubTask.updatedAt,

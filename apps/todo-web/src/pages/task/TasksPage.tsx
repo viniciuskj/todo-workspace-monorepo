@@ -6,6 +6,7 @@ import { TaskRequest, TaskResponse } from '@my-workspace/shared-dtos';
 import { TaskForm } from '../../components/TaskForm';
 import { TaskCard } from '../../components/TaskCard';
 import { Modal } from '../../components/Modal';
+import { SubTaskManager } from '../../components/SubTaskManager';
 
 export function TasksPage() {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ export function TasksPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState<'all' | 'pending' | 'completed'>('all');
+  const [taskForSubTasks, setTaskForSubTasks] = useState<TaskResponse | null>(
+    null
+  );
+  const [isSubTaskManagerOpen, setIsSubTaskManagerOpen] = useState(false);
 
   useEffect(() => {
     loadTasks();
@@ -144,6 +149,16 @@ export function TasksPage() {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const handleManageSubTasks = (task: TaskResponse) => {
+    setTaskForSubTasks(task);
+    setIsSubTaskManagerOpen(true);
+  };
+
+  const handleCloseSubTaskManager = () => {
+    setIsSubTaskManagerOpen(false);
+    setTaskForSubTasks(null);
   };
 
   const filteredTasks = tasks.filter((task) => {
@@ -277,6 +292,7 @@ export function TasksPage() {
                 onEdit={handleEditClick}
                 onToggleComplete={handleToggleComplete}
                 onDelete={handleDeleteTask}
+                onManageSubTasks={handleManageSubTasks}
                 disabled={loading}
               />
             ))}
@@ -297,6 +313,14 @@ export function TasksPage() {
           disabled={loading}
         />
       </Modal>
+
+      {taskForSubTasks && (
+        <SubTaskManager
+          task={taskForSubTasks}
+          isOpen={isSubTaskManagerOpen}
+          onClose={handleCloseSubTaskManager}
+        />
+      )}
     </div>
   );
 }
