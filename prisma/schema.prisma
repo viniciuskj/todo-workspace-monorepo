@@ -17,6 +17,7 @@ model User {
   updatedAt  DateTime  @updatedAt
   tasks      Task[]
   subTasks   SubTask[]
+  comments   Comment[]
 
   @@map("users")
 }
@@ -31,6 +32,7 @@ model Task {
   user           User      @relation(fields: [userIdentifier], references: [identifier])
   userIdentifier String
   subTasks       SubTask[]
+  comments       Comment[]
 
   @@map("tasks")
 }
@@ -48,4 +50,17 @@ model SubTask {
   userIdentifier String
 
   @@map("subtasks")
+}
+
+model Comment {
+  identifier      String    @id @default(uuid())
+  content          String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  user             User      @relation(fields: [authorIdentifier], references: [identifier])
+  authorIdentifier String
+  task             Task      @relation(fields: [taskIdentifier], references: [identifier])
+  taskIdentifier   String
+
+  @@map("comments")
 }

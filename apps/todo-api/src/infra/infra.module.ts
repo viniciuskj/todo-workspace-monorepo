@@ -6,6 +6,8 @@ import { DomainTaskRepository } from '../domain/repositories/DomainTaskRepositor
 import { PrismaTaskRepository } from './repositories/PrismaTaskRepository';
 import { DomainSubTaskRepository } from '../domain/repositories/DomainSubTaskRepository';
 import { PrismaSubTaskRepository } from './repositories/PrismaSubTaskRepository';
+import { DomainCommentRepository } from '../domain/repositories/DomainCommentRepository';
+import { PrismaCommentRepository } from './repositories/PrismaCommentRepository';
 
 @Module({
   providers: [
@@ -22,12 +24,17 @@ import { PrismaSubTaskRepository } from './repositories/PrismaSubTaskRepository'
       provide: DomainSubTaskRepository,
       useClass: PrismaSubTaskRepository,
     },
+    {
+      provide: DomainCommentRepository,
+      useClass: PrismaCommentRepository,
+    },
   ],
   exports: [
     PrismaService,
     DomainUserRepository,
     DomainTaskRepository,
     DomainSubTaskRepository,
+    DomainCommentRepository,
   ],
 })
 export class InfraModule {}

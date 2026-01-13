@@ -32,3 +32,8 @@ export type Task = Prisma.TaskModel
  * 
  */
 export type SubTask = Prisma.SubTaskModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel

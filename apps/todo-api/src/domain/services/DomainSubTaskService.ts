@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SubTask } from '../entities/SubTask';
 import { DomainSubTaskRepository } from '../repositories/DomainSubTaskRepository';
 import { DomainTaskRepository } from '../repositories/DomainTaskRepository';
-import { Task } from '../entities/Task';
+import { EntityNotFoundError } from '@my-workspace/core';
 
 @Injectable()
 export class DomainSubTaskService {
@@ -16,7 +16,7 @@ export class DomainSubTaskService {
     const task = await this.taskService.readOne(entity.taskIdentifier);
 
     if (!task) {
-      throw new Error('Task not found');
+      throw new EntityNotFoundError('Task not found');
     }
 
     return this.subTaskRepository.create(entity);

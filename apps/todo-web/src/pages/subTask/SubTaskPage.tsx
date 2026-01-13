@@ -4,18 +4,18 @@ import {
   SubTaskResponse,
   TaskResponse,
 } from '@my-workspace/shared-dtos';
-import { subTaskClient } from '../client/subtask-client';
-import { SubTaskCard } from './SubTaskCard';
-import { SubTaskForm } from './SubTaskForm';
-import { Modal } from './Modal';
+import { subTaskClient } from '../../client/subtask-client';
+import { SubTaskCard } from '../../components/SubTaskCard';
+import { SubTaskForm } from '../../components/SubTaskForm';
+import { Modal } from '../../components/Modal';
 
-interface SubTaskManagerProps {
+interface SubTaskPageProps {
   task: TaskResponse;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function SubTaskManager({ task, isOpen, onClose }: SubTaskManagerProps) {
+export function SubTaskPage({ task, isOpen, onClose }: SubTaskPageProps) {
   const [subTasks, setSubTasks] = useState<SubTaskResponse[]>([]);
   const [selectedSubTask, setSelectedSubTask] =
     useState<SubTaskResponse | null>(null);

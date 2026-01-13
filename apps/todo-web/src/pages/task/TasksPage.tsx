@@ -6,7 +6,7 @@ import { TaskRequest, TaskResponse } from '@my-workspace/shared-dtos';
 import { TaskForm } from '../../components/TaskForm';
 import { TaskCard } from '../../components/TaskCard';
 import { Modal } from '../../components/Modal';
-import { SubTaskManager } from '../../components/SubTaskManager';
+import { SubTaskPage } from '../subTask/SubTaskPage';
 
 export function TasksPage() {
   const navigate = useNavigate();
@@ -315,7 +315,7 @@ export function TasksPage() {
       </Modal>
 
       {taskForSubTasks && (
-        <SubTaskManager
+        <SubTaskPage
           task={taskForSubTasks}
           isOpen={isSubTaskManagerOpen}
           onClose={handleCloseSubTaskManager}
