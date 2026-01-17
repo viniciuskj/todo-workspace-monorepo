@@ -4,14 +4,16 @@ export class Task extends BaseEntity {
   title: string;
   description: string;
   completed: boolean;
-  userIdentifier: string;
+  createdBy: string;
+  groupIdentifier: string;
 
   constructor(props: Partial<Task>) {
     super(props);
     this.title = props?.title || '';
     this.description = props?.description || '';
     this.completed = props?.completed || false;
-    this.userIdentifier = props?.userIdentifier || '';
+    this.createdBy = props?.createdBy || '';
+    this.groupIdentifier = props?.groupIdentifier || '';
   }
 
   validate() {
@@ -20,6 +22,12 @@ export class Task extends BaseEntity {
     }
     if (!this.description) {
       throw new Error('Description is required');
+    }
+    if (!this.createdBy) {
+      throw new Error('Created by is required');
+    }
+    if (!this.groupIdentifier) {
+      throw new Error('Group identifier is required');
     }
   }
 }

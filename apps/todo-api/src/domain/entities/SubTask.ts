@@ -5,19 +5,26 @@ export class SubTask extends BaseEntity {
   description: string;
   completed: boolean;
   taskIdentifier: string;
-  userIdentifier: string;
+  createdBy: string;
 
   constructor(props: Partial<SubTask>) {
     super(props);
     this.title = props.title || ``;
     this.description = props.description || ``;
     this.completed = props.completed || false;
-    this.userIdentifier = props.userIdentifier || ``;
     this.taskIdentifier = props.taskIdentifier || ``;
+    this.createdBy = props.createdBy || ``;
   }
 
   validate() {
-    if (!this.title) throw new Error(`Title is required`);
-    if (!this.description) throw new Error(`Description is required`);
+    if (!this.title) {
+      throw new Error(`Title is required`);
+    }
+    if (!this.description) {
+      throw new Error(`Description is required`);
+    }
+    if (!this.createdBy) {
+      throw new Error(`Created by is required`);
+    }
   }
 }
