@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { Comment } from '../entities/Comment';
 import { DomainCommentRepository } from '../repositories/DomainCommentRepository';
 
+@Injectable()
 export class DomainCommentService {
   private readonly commentRepository: DomainCommentRepository;
 
@@ -33,7 +35,7 @@ export class DomainCommentService {
     return await this.commentRepository.readMany(taskIdentifier);
   }
 
-  async delete(entity: Comment): Promise<void> {
-    await this.commentRepository.delete(entity);
+  async delete(identifier: string): Promise<void> {
+    await this.commentRepository.delete(identifier);
   }
 }

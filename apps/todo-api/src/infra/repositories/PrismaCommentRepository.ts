@@ -101,9 +101,9 @@ export class PrismaCommentRepository implements DomainCommentRepository {
     });
   }
 
-  async delete(entity: Comment): Promise<void> {
+  async delete(identifier: string): Promise<void> {
     await this.prismaService.comment.delete({
-      where: { identifier: entity.identifier },
+      where: { identifier: identifier },
     });
   }
 }

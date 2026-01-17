@@ -11,6 +11,8 @@ import { TaskController } from './controllers/TaskController';
 import { DomainTaskService } from '../domain/services/DomainTaskService';
 import { SubTaskController } from './controllers/SubTaskController';
 import { DomainSubTaskService } from '../domain/services/DomainSubTaskService';
+import { CommentController } from './controllers/CommentController';
+import { DomainCommentService } from '../domain/services/DomainCommentService';
 
 @Module({
   imports: [
@@ -25,11 +27,13 @@ import { DomainSubTaskService } from '../domain/services/DomainSubTaskService';
     AuthController,
     TaskController,
     SubTaskController,
+    CommentController,
   ],
   providers: [
     DomainUserService,
     DomainTaskService,
     DomainSubTaskService,
+    DomainCommentService,
     AuthService,
     {
       provide: APP_GUARD,

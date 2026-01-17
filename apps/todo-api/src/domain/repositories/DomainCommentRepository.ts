@@ -5,5 +5,5 @@ export abstract class DomainCommentRepository {
   abstract update(entity: Comment): Promise<Comment>;
   abstract readOne(identifier: string): Promise<Comment>;
   abstract readMany(taskIdentifier: string): Promise<Comment[]>;
-  abstract delete(entity: Comment): Promise<void>;
+  abstract delete(identifier: string): Promise<void>;
 }
