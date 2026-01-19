@@ -1,9 +1,7 @@
+import { Repository } from '@my-workspace/core';
 import { Comment } from '../entities/Comment';
 
-export abstract class DomainCommentRepository {
-  abstract create(entity: Comment): Promise<Comment>;
-  abstract update(entity: Comment): Promise<Comment>;
-  abstract readOne(identifier: string): Promise<Comment>;
-  abstract readMany(taskIdentifier: string): Promise<Comment[]>;
-  abstract delete(identifier: string): Promise<void>;
+export interface DomainCommentRepository extends Repository<Comment> {
+  readOne(identifer: string): Promise<Comment>;
+  readMany(taskIdentifier: string): Promise<Comment[]>;
 }
