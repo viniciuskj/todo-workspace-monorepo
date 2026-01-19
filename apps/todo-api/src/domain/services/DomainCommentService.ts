@@ -20,7 +20,7 @@ export class DomainCommentService {
 
     const updatedComment = new Comment({
       ...entity,
-      authorIdentifier: currentComment.authorIdentifier,
+      author: currentComment.author,
       taskIdentifier: currentComment.taskIdentifier,
     });
 

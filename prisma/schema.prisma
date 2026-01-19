@@ -9,58 +9,103 @@ datasource db {
 }
 
 model User {
-  identifier String    @id @default(uuid())
-  name       String
-  email      String    @unique
-  password   String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  tasks      Task[]
-  subTasks   SubTask[]
-  comments   Comment[]
+  identifier    String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  memberships   GroupMember[]
+
+  createdGroups Group[]    @relation("UserCreatedGroups")
+  createdTasks  Task[]     @relation("UserCreatedTasks")
+  createdSubTasks SubTask[] @relation("UserCreatedSubTasks")
+  comments      Comment[]  @relation("UserComments")
 
   @@map("users")
 }
 
+model Group {
+  identifier  String   @id @default(uuid())
+  name        String
+  isPersonal  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy   User     @relation(name: "UserCreatedGroups", fields: [createdByIdentifier], references: [identifier])
+  createdByIdentifier String
+
+  members     GroupMember[]
+  tasks       Task[]
+
+  @@map("groups")
+}
+
+model GroupMember {
+  identifier      String    @id @default(uuid())
+  role            String
+  joinedAt        DateTime  @default(now())
+
+  user            User      @relation(fields: [userIdentifier], references: [identifier])
+  userIdentifier  String
+
+  group           Group     @relation(fields: [groupIdentifier], references: [identifier])
+  groupIdentifier String
+
+  @@unique([userIdentifier, groupIdentifier])
+  @@map("group_members")
+}
+
+
 model Task {
-  identifier     String    @id @default(uuid())
-  title          String
-  description    String
-  completed      Boolean   @default(false)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  user           User      @relation(fields: [userIdentifier], references: [identifier])
-  userIdentifier String
-  subTasks       SubTask[]
-  comments       Comment[]
+  identifier  String   @id @default(uuid())
+  title       String
+  description String
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  group       Group    @relation(fields: [groupIdentifier], references: [identifier])
+  groupIdentifier String
+
+  createdBy   User     @relation(name: "UserCreatedTasks", fields: [createdByIdentifier], references: [identifier])
+  createdByIdentifier String
+
+  subTasks    SubTask[]
+  comments    Comment[]
 
   @@map("tasks")
 }
 
 model SubTask {
-  identifier     String   @id @default(uuid())
-  title          String
-  description    String
-  completed      Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  task           Task     @relation(fields: [taskIdentifier], references: [identifier])
+  identifier  String   @id @default(uuid())
+  title       String
+  description String
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  task        Task     @relation(fields: [taskIdentifier], references: [identifier])
   taskIdentifier String
-  user           User     @relation(fields: [userIdentifier], references: [identifier])
-  userIdentifier String
+
+  createdBy   User     @relation(name: "UserCreatedSubTasks", fields: [createdByIdentifier], references: [identifier])
+  createdByIdentifier String
 
   @@map("subtasks")
 }
 
 model Comment {
-  identifier      String    @id @default(uuid())
-  content          String
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  user             User      @relation(fields: [authorIdentifier], references: [identifier])
+  identifier  String   @id @default(uuid())
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  task        Task     @relation(fields: [taskIdentifier], references: [identifier])
+  taskIdentifier String
+
+  author      User     @relation(name: "UserComments", fields: [authorIdentifier], references: [identifier])
   authorIdentifier String
-  task             Task      @relation(fields: [taskIdentifier], references: [identifier])
-  taskIdentifier   String
 
   @@map("comments")
 }

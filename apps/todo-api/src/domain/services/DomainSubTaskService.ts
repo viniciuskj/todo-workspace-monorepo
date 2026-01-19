@@ -34,7 +34,7 @@ export class DomainSubTaskService {
       identifier: currentSubTask.identifier,
       createdAt: currentSubTask.createdAt,
       taskIdentifier: currentSubTask.taskIdentifier,
-      userIdentifier: currentSubTask.userIdentifier,
+      createdBy: currentSubTask.createdBy,
       updatedAt: new Date(),
     });
 
