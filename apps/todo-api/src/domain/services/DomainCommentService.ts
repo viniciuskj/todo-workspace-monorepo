@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Comment } from '../entities/Comment';
 import { DomainCommentRepository } from '../repositories/DomainCommentRepository';
+import { DOMAIN_COMMENT_REPOSITORY } from '../repositories/tokens/tokens';
 
 @Injectable()
 export class DomainCommentService {
-  private readonly commentRepository: DomainCommentRepository;
+  constructor(
+    @Inject(DOMAIN_COMMENT_REPOSITORY)
+    private readonly commentRepository: DomainCommentRepository
+  ) {}
 
   async create(entity: Comment): Promise<Comment> {
     entity.validate();

@@ -14,20 +14,10 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
         title: entity.title,
         description: entity.description,
         completed: entity.completed,
-        userIdentifier: entity.userIdentifier,
+        createdByIdentifier: entity.createdBy,
         taskIdentifier: entity.taskIdentifier,
         createdAt: entity.createdAt,
         updatedAt: entity.updatedAt,
-      },
-      select: {
-        identifier: true,
-        title: true,
-        description: true,
-        completed: true,
-        userIdentifier: true,
-        taskIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
       },
     });
 
@@ -36,7 +26,7 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
       title: createdSubTask.title,
       description: createdSubTask.description,
       completed: createdSubTask.completed,
-      userIdentifier: createdSubTask.userIdentifier,
+      createdBy: createdSubTask.createdByIdentifier,
       taskIdentifier: createdSubTask.taskIdentifier,
       createdAt: createdSubTask.createdAt,
       updatedAt: createdSubTask.updatedAt,
@@ -50,19 +40,9 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
         title: entity.title,
         description: entity.description,
         completed: entity.completed,
-        userIdentifier: entity.userIdentifier,
+        createdByIdentifier: entity.createdBy,
         taskIdentifier: entity.taskIdentifier,
         updatedAt: entity.updatedAt,
-      },
-      select: {
-        identifier: true,
-        title: true,
-        description: true,
-        completed: true,
-        userIdentifier: true,
-        taskIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
       },
     });
 
@@ -71,7 +51,7 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
       title: updatedSubTask.title,
       description: updatedSubTask.description,
       completed: updatedSubTask.completed,
-      userIdentifier: updatedSubTask.userIdentifier,
+      createdBy: updatedSubTask.createdByIdentifier,
       taskIdentifier: updatedSubTask.taskIdentifier,
       createdAt: updatedSubTask.createdAt,
       updatedAt: updatedSubTask.updatedAt,
@@ -81,16 +61,6 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
   async readOne(identifier: string): Promise<SubTask> {
     const subTask = await this.prismaService.subTask.findUnique({
       where: { identifier },
-      select: {
-        identifier: true,
-        title: true,
-        description: true,
-        completed: true,
-        userIdentifier: true,
-        taskIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     return new SubTask({
@@ -98,7 +68,7 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
       title: subTask.title,
       description: subTask.description,
       completed: subTask.completed,
-      userIdentifier: subTask.userIdentifier,
+      createdBy: subTask.createdByIdentifier,
       taskIdentifier: subTask.taskIdentifier,
       createdAt: subTask.createdAt,
       updatedAt: subTask.updatedAt,
@@ -107,17 +77,7 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
 
   async readMany(taskIdentifier: string): Promise<SubTask[]> {
     const subtasks = await this.prismaService.subTask.findMany({
-      where: { taskIdentifier },
-      select: {
-        identifier: true,
-        title: true,
-        description: true,
-        completed: true,
-        userIdentifier: true,
-        taskIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      where: { taskIdentifier: taskIdentifier },
     });
 
     return subtasks.map((subTask) => {
@@ -126,7 +86,7 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
         title: subTask.title,
         description: subTask.description,
         completed: subTask.completed,
-        userIdentifier: subTask.userIdentifier,
+        createdBy: subTask.createdByIdentifier,
         taskIdentifier: subTask.taskIdentifier,
         createdAt: subTask.createdAt,
         updatedAt: subTask.updatedAt,

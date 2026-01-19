@@ -13,15 +13,7 @@ export class PrismaCommentRepository implements DomainCommentRepository {
         identifier: entity.identifier,
         content: entity.content,
         taskIdentifier: entity.taskIdentifier,
-        authorIdentifier: entity.authorIdentifier,
-      },
-      select: {
-        identifier: true,
-        content: true,
-        taskIdentifier: true,
-        authorIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
+        authorIdentifier: entity.author,
       },
     });
 
@@ -29,7 +21,7 @@ export class PrismaCommentRepository implements DomainCommentRepository {
       identifier: createdComment.identifier,
       content: createdComment.content,
       taskIdentifier: createdComment.taskIdentifier,
-      authorIdentifier: createdComment.authorIdentifier,
+      author: createdComment.authorIdentifier,
       createdAt: createdComment.createdAt,
       updatedAt: createdComment.updatedAt,
     });
@@ -38,21 +30,13 @@ export class PrismaCommentRepository implements DomainCommentRepository {
   async readOne(identifier: string): Promise<Comment> {
     const comment = await this.prismaService.comment.findUnique({
       where: { identifier: identifier },
-      select: {
-        identifier: true,
-        authorIdentifier: true,
-        content: true,
-        taskIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     return new Comment({
       identifier: comment.identifier,
       content: comment.content,
       taskIdentifier: comment.taskIdentifier,
-      authorIdentifier: comment.authorIdentifier,
+      author: comment.authorIdentifier,
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
     });
@@ -70,7 +54,7 @@ export class PrismaCommentRepository implements DomainCommentRepository {
       identifier: updatedComment.identifier,
       content: updatedComment.content,
       taskIdentifier: updatedComment.taskIdentifier,
-      authorIdentifier: updatedComment.authorIdentifier,
+      author: updatedComment.authorIdentifier,
       createdAt: updatedComment.createdAt,
       updatedAt: updatedComment.updatedAt,
     });
@@ -79,14 +63,6 @@ export class PrismaCommentRepository implements DomainCommentRepository {
   async readMany(taskIdentifier: string): Promise<Comment[]> {
     const comments = await this.prismaService.comment.findMany({
       where: { taskIdentifier: taskIdentifier },
-      select: {
-        identifier: true,
-        content: true,
-        taskIdentifier: true,
-        authorIdentifier: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     return comments.map((comment) => {
@@ -94,7 +70,7 @@ export class PrismaCommentRepository implements DomainCommentRepository {
         identifier: comment.identifier,
         content: comment.content,
         taskIdentifier: comment.taskIdentifier,
-        authorIdentifier: comment.authorIdentifier,
+        author: comment.authorIdentifier,
         createdAt: comment.createdAt,
         updatedAt: comment.updatedAt,
       });

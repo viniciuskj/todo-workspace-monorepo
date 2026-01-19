@@ -16,14 +16,6 @@ export class PrismaUserRepository implements DomainUserRepository {
         email: entity.email,
         password: entity.password,
       },
-      select: {
-        identifier: true,
-        name: true,
-        email: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     return new User({
@@ -44,14 +36,6 @@ export class PrismaUserRepository implements DomainUserRepository {
         email: entity.email,
         password: entity.password,
       },
-      select: {
-        identifier: true,
-        name: true,
-        email: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     return new User({
@@ -67,14 +51,6 @@ export class PrismaUserRepository implements DomainUserRepository {
   async readOne(identifier: string): Promise<User> {
     const user = await this.prismaService.user.findUnique({
       where: { identifier: identifier },
-      select: {
-        identifier: true,
-        name: true,
-        email: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     if (!user) {
@@ -92,16 +68,7 @@ export class PrismaUserRepository implements DomainUserRepository {
   }
 
   async readMany(): Promise<User[]> {
-    const users = await this.prismaService.user.findMany({
-      select: {
-        identifier: true,
-        name: true,
-        email: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
+    const users = await this.prismaService.user.findMany();
 
     return users.map(
       (user) =>
@@ -119,14 +86,6 @@ export class PrismaUserRepository implements DomainUserRepository {
   async searchUserByEmail(email: string): Promise<User> {
     const user = await this.prismaService.user.findUnique({
       where: { email: email },
-      select: {
-        identifier: true,
-        name: true,
-        email: true,
-        password: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
 
     if (!user) {
@@ -141,5 +100,9 @@ export class PrismaUserRepository implements DomainUserRepository {
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     });
+  }
+
+  async delete(_: string): Promise<void> {
+    new Error('Method not implemented');
   }
 }

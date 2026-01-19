@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Task } from '../entities/Task';
 import { DomainTaskRepository } from '../repositories/DomainTaskRepository';
+import { DOMAIN_TASK_REPOSITORY } from '../repositories/tokens/tokens';
 
 @Injectable()
 export class DomainTaskService {
-  constructor(private readonly taskRepository: DomainTaskRepository) {}
+  constructor(
+    @Inject(DOMAIN_TASK_REPOSITORY)
+    private readonly taskRepository: DomainTaskRepository
+  ) {}
 
   async create(entity: Task): Promise<Task> {
     entity.validate();
@@ -20,6 +24,7 @@ export class DomainTaskService {
     const updatedTask = new Task({
       ...entity,
       identifier: currentTask.identifier,
+      groupIdentifier: currentTask.groupIdentifier,
       createdAt: currentTask.createdAt,
       updatedAt: new Date(),
     });

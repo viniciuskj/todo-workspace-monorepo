@@ -1,40 +1,55 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
-import { DomainUserRepository } from '../domain/repositories/DomainUserRepository';
 import { PrismaUserRepository } from './repositories/PrismaUserRepository';
-import { DomainTaskRepository } from '../domain/repositories/DomainTaskRepository';
 import { PrismaTaskRepository } from './repositories/PrismaTaskRepository';
-import { DomainSubTaskRepository } from '../domain/repositories/DomainSubTaskRepository';
 import { PrismaSubTaskRepository } from './repositories/PrismaSubTaskRepository';
-import { DomainCommentRepository } from '../domain/repositories/DomainCommentRepository';
 import { PrismaCommentRepository } from './repositories/PrismaCommentRepository';
+import { PrismaGroupMemberRepository } from './repositories/PrismaGroupMemberRepository';
+import {
+  DOMAIN_USER_REPOSITORY,
+  DOMAIN_TASK_REPOSITORY,
+  DOMAIN_SUBTASK_REPOSITORY,
+  DOMAIN_COMMENT_REPOSITORY,
+  DOMAIN_GROUP_REPOSITORY,
+  DOMAIN_GROUPMEMBER_REPOSITORY,
+} from '../domain/repositories/tokens/tokens';
 
 @Module({
   providers: [
     PrismaService,
     {
-      provide: DomainUserRepository,
+      provide: DOMAIN_USER_REPOSITORY,
       useClass: PrismaUserRepository,
     },
     {
-      provide: DomainTaskRepository,
+      provide: DOMAIN_TASK_REPOSITORY,
       useClass: PrismaTaskRepository,
     },
     {
-      provide: DomainSubTaskRepository,
+      provide: DOMAIN_SUBTASK_REPOSITORY,
       useClass: PrismaSubTaskRepository,
     },
     {
-      provide: DomainCommentRepository,
+      provide: DOMAIN_COMMENT_REPOSITORY,
       useClass: PrismaCommentRepository,
+    },
+    {
+      provide: DOMAIN_GROUP_REPOSITORY,
+      useClass: PrismaGroupMemberRepository,
+    },
+    {
+      provide: DOMAIN_GROUPMEMBER_REPOSITORY,
+      useClass: PrismaGroupMemberRepository,
     },
   ],
   exports: [
     PrismaService,
-    DomainUserRepository,
-    DomainTaskRepository,
-    DomainSubTaskRepository,
-    DomainCommentRepository,
+    DOMAIN_USER_REPOSITORY,
+    DOMAIN_TASK_REPOSITORY,
+    DOMAIN_SUBTASK_REPOSITORY,
+    DOMAIN_COMMENT_REPOSITORY,
+    DOMAIN_GROUP_REPOSITORY,
+    DOMAIN_GROUPMEMBER_REPOSITORY,
   ],
 })
 export class InfraModule {}

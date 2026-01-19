@@ -15,15 +15,8 @@ export class PrismaTaskRepository implements DomainTaskRepository {
         title: entity.title,
         description: entity.description,
         completed: entity.completed,
-        userIdentifier: entity.userIdentifier,
-      },
-      select: {
-        identifier: true,
-        title: true,
-        description: true,
-        completed: true,
-        createdAt: true,
-        updatedAt: true,
+        groupIdentifier: entity.groupIdentifier,
+        createdByIdentifier: entity.createdBy,
       },
     });
 
@@ -32,6 +25,8 @@ export class PrismaTaskRepository implements DomainTaskRepository {
       title: newTask.title,
       description: newTask.description,
       completed: newTask.completed,
+      groupIdentifier: newTask.groupIdentifier,
+      createdBy: newTask.createdByIdentifier,
       createdAt: newTask.createdAt,
       updatedAt: newTask.updatedAt,
     });
@@ -44,14 +39,6 @@ export class PrismaTaskRepository implements DomainTaskRepository {
         title: entity.title,
         description: entity.description,
         completed: entity.completed,
-      },
-      select: {
-        identifier: true,
-        title: true,
-        description: true,
-        completed: true,
-        createdAt: true,
-        updatedAt: true,
       },
     });
 
@@ -86,7 +73,7 @@ export class PrismaTaskRepository implements DomainTaskRepository {
 
   async readMany(userIdentifier: string): Promise<Task[]> {
     const tasks = await this.prismaService.task.findMany({
-      where: { userIdentifier },
+      where: { createdByIdentifier: userIdentifier },
       orderBy: { createdAt: 'desc' },
     });
 
@@ -96,6 +83,7 @@ export class PrismaTaskRepository implements DomainTaskRepository {
           identifier: task.identifier,
           title: task.title,
           description: task.description,
+          groupIdentifier: task.groupIdentifier,
           completed: task.completed,
           createdAt: task.createdAt,
           updatedAt: task.updatedAt,

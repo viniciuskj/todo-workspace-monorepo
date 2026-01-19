@@ -1,19 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { SubTask } from '../entities/SubTask';
 import { DomainSubTaskRepository } from '../repositories/DomainSubTaskRepository';
 import { DomainTaskRepository } from '../repositories/DomainTaskRepository';
 import { EntityNotFoundError } from '@my-workspace/core';
+import {
+  DOMAIN_SUBTASK_REPOSITORY,
+  DOMAIN_TASK_REPOSITORY,
+} from '../repositories/tokens/tokens';
 
 @Injectable()
 export class DomainSubTaskService {
   constructor(
+    @Inject(DOMAIN_SUBTASK_REPOSITORY)
     private readonly subTaskRepository: DomainSubTaskRepository,
-    private readonly taskService: DomainTaskRepository
+    @Inject(DOMAIN_TASK_REPOSITORY)
+    private readonly taskRepository: DomainTaskRepository
   ) {}
 
   async create(entity: SubTask): Promise<SubTask> {
     entity.validate();
-    const task = await this.taskService.readOne(entity.taskIdentifier);
+    const task = await this.taskRepository.readOne(entity.taskIdentifier);
 
     if (!task) {
       throw new EntityNotFoundError('Task not found');

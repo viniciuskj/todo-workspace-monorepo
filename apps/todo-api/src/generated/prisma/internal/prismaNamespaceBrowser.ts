@@ -52,6 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Group: 'Group',
+  GroupMember: 'GroupMember',
   Task: 'Task',
   SubTask: 'SubTask',
   Comment: 'Comment'
@@ -85,6 +87,29 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const GroupScalarFieldEnum = {
+  identifier: 'identifier',
+  name: 'name',
+  isPersonal: 'isPersonal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdByIdentifier: 'createdByIdentifier'
+} as const
+
+export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
+
+
+export const GroupMemberScalarFieldEnum = {
+  identifier: 'identifier',
+  role: 'role',
+  joinedAt: 'joinedAt',
+  userIdentifier: 'userIdentifier',
+  groupIdentifier: 'groupIdentifier'
+} as const
+
+export type GroupMemberScalarFieldEnum = (typeof GroupMemberScalarFieldEnum)[keyof typeof GroupMemberScalarFieldEnum]
+
+
 export const TaskScalarFieldEnum = {
   identifier: 'identifier',
   title: 'title',
@@ -92,7 +117,8 @@ export const TaskScalarFieldEnum = {
   completed: 'completed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userIdentifier: 'userIdentifier'
+  groupIdentifier: 'groupIdentifier',
+  createdByIdentifier: 'createdByIdentifier'
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
@@ -106,7 +132,7 @@ export const SubTaskScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   taskIdentifier: 'taskIdentifier',
-  userIdentifier: 'userIdentifier'
+  createdByIdentifier: 'createdByIdentifier'
 } as const
 
 export type SubTaskScalarFieldEnum = (typeof SubTaskScalarFieldEnum)[keyof typeof SubTaskScalarFieldEnum]
@@ -117,8 +143,8 @@ export const CommentScalarFieldEnum = {
   content: 'content',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  authorIdentifier: 'authorIdentifier',
-  taskIdentifier: 'taskIdentifier'
+  taskIdentifier: 'taskIdentifier',
+  authorIdentifier: 'authorIdentifier'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]

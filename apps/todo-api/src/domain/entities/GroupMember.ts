@@ -1,17 +1,16 @@
 import { RoleType } from '../types/RoleType';
-import { BaseEntity } from './BaseEntity';
 
-export class GroupMember extends BaseEntity {
+export class GroupMember {
+  identifier: string;
   role: RoleType;
   joinedAt: Date;
-  useridentifier: string;
+  userIdentifier: string;
   groupIdentifier: string;
 
   constructor(props: Partial<GroupMember>) {
-    super(props);
     this.role = props.role || RoleType.MEMBER;
     this.joinedAt = props.joinedAt || new Date();
-    this.useridentifier = props.useridentifier || ``;
+    this.userIdentifier = props.userIdentifier || ``;
     this.groupIdentifier = props.groupIdentifier || ``;
   }
 }

@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { User } from '../entities/User';
 import { DomainUserRepository } from '../repositories/DomainUserRepository';
 import bcrypt from 'bcrypt';
+import { DOMAIN_USER_REPOSITORY } from '../repositories/tokens/tokens';
 
 @Injectable()
 export class DomainUserService {
-  constructor(private readonly userRepository: DomainUserRepository) {}
+  constructor(
+    @Inject(DOMAIN_USER_REPOSITORY)
+    private readonly userRepository: DomainUserRepository
+  ) {}
 
   async create(entity: User): Promise<User> {
     entity.validate();
