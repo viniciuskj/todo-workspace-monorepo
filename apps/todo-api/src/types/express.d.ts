@@ -4,6 +4,10 @@ declare global {
   namespace Express {
     interface Request {
       user?: JwtPayload;
+      group: {
+        identifier: string;
+        role: string;
+      };
     }
   }
 }

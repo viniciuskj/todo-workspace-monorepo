@@ -13,6 +13,7 @@ import { SubTaskController } from './controllers/SubTaskController';
 import { DomainSubTaskService } from '../domain/services/DomainSubTaskService';
 import { CommentController } from './controllers/CommentController';
 import { DomainCommentService } from '../domain/services/DomainCommentService';
+import { GroupAccessGuard } from './auth/auth.group.guard';
 
 @Module({
   imports: [
@@ -38,6 +39,10 @@ import { DomainCommentService } from '../domain/services/DomainCommentService';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: GroupAccessGuard,
     },
   ],
 })
