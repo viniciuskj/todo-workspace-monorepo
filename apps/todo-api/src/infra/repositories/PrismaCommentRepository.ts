@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DomainCommentRepository } from '../../domain/repositories/DomainCommentRepository';
 import { PrismaService } from '../prisma/prisma.service';
 import { Comment } from '../../domain/entities/Comment';
+import { EntityNotFoundError } from '@my-workspace/core';
 
 @Injectable()
 export class PrismaCommentRepository implements DomainCommentRepository {
@@ -31,6 +32,10 @@ export class PrismaCommentRepository implements DomainCommentRepository {
     const comment = await this.prismaService.comment.findUnique({
       where: { identifier: identifier },
     });
+
+    if (!comment) {
+      throw new EntityNotFoundError('Comment not found');
+    }
 
     return new Comment({
       identifier: comment.identifier,

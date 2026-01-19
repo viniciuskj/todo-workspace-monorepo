@@ -29,4 +29,14 @@ export class DomainGroupMemberService {
   async readMany(groupIdentifier: string): Promise<GroupMember[]> {
     return await this.groupMemberRepository.readMany(groupIdentifier);
   }
+
+  async findByUserAndGroup(
+    userIdentifier: string,
+    groupIdentifier: string
+  ): Promise<GroupMember | null> {
+    return await this.groupMemberRepository.findByUserAndGroup(
+      userIdentifier,
+      groupIdentifier
+    );
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SubTask } from '../../domain/entities/SubTask';
 import { DomainSubTaskRepository } from '../../domain/repositories/DomainSubTaskRepository';
 import { PrismaService } from '../prisma/prisma.service';
+import { EntityNotFoundError } from '@my-workspace/core';
 
 @Injectable()
 export class PrismaSubTaskRepository implements DomainSubTaskRepository {
@@ -62,6 +63,10 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
     const subTask = await this.prismaService.subTask.findUnique({
       where: { identifier },
     });
+
+    if (!subTask) {
+      throw new EntityNotFoundError('SubTask not found');
+    }
 
     return new SubTask({
       identifier: subTask.identifier,

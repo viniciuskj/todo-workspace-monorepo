@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Group } from '../../domain/entities/Group';
 import { DomainGroupRepository } from '../../domain/repositories/DomainGroupRepository';
 import { PrismaService } from '../prisma/prisma.service';
+import { EntityNotFoundError } from '@my-workspace/core';
 
 @Injectable()
 export class PrismaGroupRepository implements DomainGroupRepository {
@@ -55,6 +56,10 @@ export class PrismaGroupRepository implements DomainGroupRepository {
     const group = await this.prismaService.group.findUnique({
       where: { identifier: identifier },
     });
+
+    if (!group) {
+      throw new EntityNotFoundError('Group not found');
+    }
 
     return new Group({
       identifier: group.identifier,

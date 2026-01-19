@@ -1,4 +1,5 @@
 import { RoleType } from '../types/RoleType';
+import { v4 as uuid } from 'uuid';
 
 export class GroupMember {
   identifier: string;
@@ -8,6 +9,7 @@ export class GroupMember {
   groupIdentifier: string;
 
   constructor(props: Partial<GroupMember>) {
+    this.identifier = props.identifier || uuid();
     this.role = props.role || RoleType.MEMBER;
     this.joinedAt = props.joinedAt || new Date();
     this.userIdentifier = props.userIdentifier || ``;

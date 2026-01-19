@@ -2,13 +2,26 @@ import { Inject, Injectable } from '@nestjs/common';
 import { User } from '../entities/User';
 import { DomainUserRepository } from '../repositories/DomainUserRepository';
 import bcrypt from 'bcrypt';
-import { DOMAIN_USER_REPOSITORY } from '../repositories/tokens/tokens';
+import {
+  DOMAIN_GROUPMEMBER_REPOSITORY,
+  DOMAIN_USER_REPOSITORY,
+} from '../repositories/tokens/tokens';
+import { DomainGroupRepository } from '../repositories/DomainGroupRepository';
+import { DOMAIN_GROUP_REPOSITORY } from '../repositories/tokens/tokens';
+import { Group } from '../entities/Group';
+import { DomainGroupMemberRepository } from '../repositories/DomainGroupMemberRepository';
+import { RoleType } from '../types/RoleType';
+import { GroupMember } from '../entities/GroupMember';
 
 @Injectable()
 export class DomainUserService {
   constructor(
     @Inject(DOMAIN_USER_REPOSITORY)
-    private readonly userRepository: DomainUserRepository
+    private readonly userRepository: DomainUserRepository,
+    @Inject(DOMAIN_GROUP_REPOSITORY)
+    private readonly groupRepository: DomainGroupRepository,
+    @Inject(DOMAIN_GROUPMEMBER_REPOSITORY)
+    private readonly groupMemberRepository: DomainGroupMemberRepository
   ) {}
 
   async create(entity: User): Promise<User> {
@@ -21,7 +34,25 @@ export class DomainUserService {
       password: hashedPassword,
     });
 
-    return await this.userRepository.create(user);
+    const createdUser = await this.userRepository.create(user);
+
+    const group = new Group({
+      name: 'Default',
+      isPersonal: true,
+      createdBy: createdUser.identifier,
+    });
+
+    const createdGroup = await this.groupRepository.create(group);
+
+    const groupMember = new GroupMember({
+      role: RoleType.OWNER,
+      userIdentifier: createdUser.identifier,
+      groupIdentifier: createdGroup.identifier,
+    });
+
+    await this.groupMemberRepository.create(groupMember);
+
+    return createdUser;
   }
 
   async update(entity: User): Promise<User> {

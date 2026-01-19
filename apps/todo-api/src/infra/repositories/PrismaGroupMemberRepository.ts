@@ -83,4 +83,26 @@ export class PrismaGroupMemberRepository
       where: { identifier: identifier },
     });
   }
+
+  async findByUserAndGroup(
+    userIdentifier: string,
+    groupIdentifier: string
+  ): Promise<GroupMember | null> {
+    const groupMember = await this.prismaService.groupMember.findFirst({
+      where: {
+        userIdentifier: userIdentifier,
+        groupIdentifier: groupIdentifier,
+      },
+    });
+
+    if (!groupMember) return null;
+
+    return new GroupMember({
+      identifier: groupMember.identifier,
+      role: groupMember.role as RoleType,
+      joinedAt: groupMember.joinedAt,
+      userIdentifier: groupMember.userIdentifier,
+      groupIdentifier: groupMember.groupIdentifier,
+    });
+  }
 }
