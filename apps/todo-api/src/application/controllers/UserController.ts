@@ -11,7 +11,6 @@ import {
 import { DomainUserService } from '../../domain/services/DomainUserService';
 import { Response } from 'express';
 import { User } from '../../domain/entities/User';
-import { v4 as uuid } from 'uuid';
 import { UserRequest, UserResponse } from '@my-workspace/shared-dtos';
 import { userRequestSchema } from '@my-workspace/shared-dtos';
 import { Public } from '../../common/decorators/public.decorator';
@@ -29,7 +28,6 @@ export class UserController {
     const validatedUserRequest = userRequestSchema.parse(userRequest);
 
     const newUser = new User({
-      identifier: uuid(),
       email: validatedUserRequest.email,
       name: validatedUserRequest.name,
       password: validatedUserRequest.password,

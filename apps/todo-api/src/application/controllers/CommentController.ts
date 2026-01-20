@@ -18,7 +18,6 @@ import {
 } from '@my-workspace/shared-dtos';
 import { Comment } from '../../domain/entities/Comment';
 import { Response, Request } from 'express';
-import { v4 as uuid } from 'uuid';
 
 @Controller('comments')
 export class CommentController {
@@ -35,9 +34,8 @@ export class CommentController {
     const validatedCommentRequest = commentRequestSchema.parse(commentRequest);
 
     const createdComment = new Comment({
-      identifier: uuid(),
       content: validatedCommentRequest.content,
-      authorIdentifier: author.identifier,
+      author: author.identifier,
       taskIdentifier: validatedCommentRequest.taskIdentifier,
     });
 
@@ -46,7 +44,7 @@ export class CommentController {
     const commentResponse: CommentResponse = {
       identifier: createdComment.identifier,
       content: createdComment.content,
-      authorIdentifier: createdComment.authorIdentifier,
+      authorIdentifier: createdComment.author,
       taskIdentifier: createdComment.taskIdentifier,
     };
 
@@ -63,7 +61,7 @@ export class CommentController {
     const commentResponse: CommentResponse = {
       identifier: comment.identifier,
       content: comment.content,
-      authorIdentifier: comment.authorIdentifier,
+      authorIdentifier: comment.author,
       taskIdentifier: comment.taskIdentifier,
     };
 
@@ -80,7 +78,7 @@ export class CommentController {
     const commentResponses: CommentResponse[] = comments.map((comment) => ({
       identifier: comment.identifier,
       content: comment.content,
-      authorIdentifier: comment.authorIdentifier,
+      authorIdentifier: comment.author,
       taskIdentifier: comment.taskIdentifier,
     }));
 
@@ -102,7 +100,7 @@ export class CommentController {
     const commentResponse: CommentResponse = {
       identifier: currentComment.identifier,
       content: currentComment.content,
-      authorIdentifier: currentComment.authorIdentifier,
+      authorIdentifier: currentComment.author,
       taskIdentifier: currentComment.taskIdentifier,
     };
 

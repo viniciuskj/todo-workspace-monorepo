@@ -3,6 +3,8 @@ export interface TaskResponse {
   title: string;
   description: string;
   completed: boolean;
+  groupIdentifier: string;
+  createdBy: string;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -18,7 +18,6 @@ import {
 } from '@my-workspace/shared-dtos';
 import { Request, Response } from 'express';
 import { SubTask } from '../../domain/entities/SubTask';
-import { v4 as uuid } from 'uuid';
 
 @Controller('subtasks')
 export class SubTaskController {
@@ -35,11 +34,10 @@ export class SubTaskController {
     const validatedSubTaskRequest = subTaskRequestSchema.parse(subTaskRequest);
 
     const newSubTask = new SubTask({
-      identifier: uuid(),
       title: validatedSubTaskRequest.title,
       description: validatedSubTaskRequest.description,
       completed: validatedSubTaskRequest.completed,
-      userIdentifier: user.identifier,
+      createdBy: user.identifier,
       taskIdentifier: validatedSubTaskRequest.taskIdentifier,
     });
 
@@ -49,6 +47,7 @@ export class SubTaskController {
       identifier: createdSubTask.identifier,
       title: createdSubTask.title,
       description: createdSubTask.description,
+      createdBy: createdSubTask.createdBy,
       taskIdentifier: createdSubTask.taskIdentifier,
       completed: createdSubTask.completed,
       createdAt: createdSubTask.createdAt,
@@ -69,6 +68,7 @@ export class SubTaskController {
       identifier: subTask.identifier,
       title: subTask.title,
       description: subTask.description,
+      createdBy: subTask.createdBy,
       taskIdentifier: subTask.taskIdentifier,
       completed: subTask.completed,
       createdAt: subTask.createdAt,
@@ -89,6 +89,7 @@ export class SubTaskController {
       identifier: subTask.identifier,
       title: subTask.title,
       description: subTask.description,
+      createdBy: subTask.createdBy,
       taskIdentifier: subTask.taskIdentifier,
       completed: subTask.completed,
       createdAt: subTask.createdAt,
@@ -118,6 +119,7 @@ export class SubTaskController {
       identifier: updatedSubTask.identifier,
       title: updatedSubTask.title,
       description: updatedSubTask.description,
+      createdBy: subTask.createdBy,
       taskIdentifier: updatedSubTask.taskIdentifier,
       completed: updatedSubTask.completed,
       createdAt: updatedSubTask.createdAt,

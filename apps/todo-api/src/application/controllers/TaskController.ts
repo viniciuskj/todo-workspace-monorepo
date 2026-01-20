@@ -17,7 +17,6 @@ import {
 } from '@my-workspace/shared-dtos';
 import { Response, Request } from 'express';
 import { Task } from '../../domain/entities/Task';
-import { v4 as uuid } from 'uuid';
 
 @Controller('tasks')
 export class TaskController {
@@ -30,15 +29,16 @@ export class TaskController {
     @Req() req: Request
   ): Promise<Response<TaskResponse>> {
     const user = req.user;
+    const group = req.group;
 
     const validatedTask = taskRequestSchema.parse(taskRequest);
 
     const newTask = new Task({
-      identifier: uuid(),
       title: validatedTask.title,
       description: validatedTask.description,
       completed: validatedTask.completed,
-      userIdentifier: user.identifier,
+      groupIdentifier: group.identifier,
+      createdBy: user.identifier,
     });
 
     const createdTask = await this.taskService.create(newTask);
@@ -48,6 +48,8 @@ export class TaskController {
       title: createdTask.title,
       description: createdTask.description,
       completed: createdTask.completed,
+      groupIdentifier: createdTask.groupIdentifier,
+      createdBy: createdTask.createdBy,
       createdAt: createdTask.createdAt,
       updatedAt: createdTask.updatedAt,
     };
@@ -76,6 +78,8 @@ export class TaskController {
       title: updatedTask.title,
       description: updatedTask.description,
       completed: updatedTask.completed,
+      groupIdentifier: updatedTask.groupIdentifier,
+      createdBy: updatedTask.createdBy,
       createdAt: updatedTask.createdAt,
       updatedAt: updatedTask.updatedAt,
     };
@@ -96,6 +100,8 @@ export class TaskController {
       title: task.title,
       description: task.description,
       completed: task.completed,
+      groupIdentifier: task.groupIdentifier,
+      createdBy: task.createdBy,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
     }));
@@ -115,6 +121,8 @@ export class TaskController {
       title: task.title,
       description: task.description,
       completed: task.completed,
+      groupIdentifier: task.groupIdentifier,
+      createdBy: task.createdBy,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
     };
