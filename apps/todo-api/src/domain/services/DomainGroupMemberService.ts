@@ -33,7 +33,7 @@ export class DomainGroupMemberService {
   async findByUserAndGroup(
     userIdentifier: string,
     groupIdentifier: string
-  ): Promise<GroupMember | null> {
+  ): Promise<GroupMember> {
     return await this.groupMemberRepository.findByUserAndGroup(
       userIdentifier,
       groupIdentifier

@@ -10,9 +10,21 @@ export class GroupMember {
 
   constructor(props: Partial<GroupMember>) {
     this.identifier = props.identifier || uuid();
-    this.role = props.role || RoleType.MEMBER;
+    this.role = props.role || RoleType.OWNER;
     this.joinedAt = props.joinedAt || new Date();
-    this.userIdentifier = props.userIdentifier || ``;
-    this.groupIdentifier = props.groupIdentifier || ``;
+    this.userIdentifier = props.userIdentifier || '';
+    this.groupIdentifier = props.groupIdentifier || '';
+  }
+
+  validate() {
+    if (!this.role) {
+      throw new Error('GroupMember role is required');
+    }
+    if (!this.userIdentifier) {
+      throw new Error('GroupMember userIdentifier is required');
+    }
+    if (!this.groupIdentifier) {
+      throw new Error('GroupMember groupIdentifier is required');
+    }
   }
 }
