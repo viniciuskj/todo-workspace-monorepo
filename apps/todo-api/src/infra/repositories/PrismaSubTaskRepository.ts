@@ -17,8 +17,6 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
         completed: entity.completed,
         createdByIdentifier: entity.createdBy,
         taskIdentifier: entity.taskIdentifier,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
       },
     });
 
@@ -43,7 +41,6 @@ export class PrismaSubTaskRepository implements DomainSubTaskRepository {
         completed: entity.completed,
         createdByIdentifier: entity.createdBy,
         taskIdentifier: entity.taskIdentifier,
-        updatedAt: entity.updatedAt,
       },
     });
 

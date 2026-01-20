@@ -7,5 +7,5 @@ export interface DomainGroupMemberRepository extends Repository<GroupMember> {
   findByUserAndGroup(
     userIdentifier: string,
     groupIdentifier: string
-  ): Promise<GroupMember | null>;
+  ): Promise<GroupMember>;
 }

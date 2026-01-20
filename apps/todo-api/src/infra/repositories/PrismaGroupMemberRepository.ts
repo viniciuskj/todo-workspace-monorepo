@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { GroupMember } from '../../domain/entities/GroupMember';
 import { DomainGroupMemberRepository } from '../../domain/repositories/DomainGroupMemberRepository';
-import { RoleType } from '../../domain/types/RoleType';
 import { PrismaService } from '../prisma/prisma.service';
+import { EntityNotFoundError } from '@my-workspace/core';
+import { getRoleTypeFromString } from '../../domain/types/RoleType';
 
 @Injectable()
 export class PrismaGroupMemberRepository
@@ -11,6 +12,8 @@ export class PrismaGroupMemberRepository
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(entity: GroupMember): Promise<GroupMember> {
+    entity.validate();
+
     const createGroupMember = await this.prismaService.groupMember.create({
       data: {
         identifier: entity.identifier,
@@ -23,7 +26,7 @@ export class PrismaGroupMemberRepository
 
     return new GroupMember({
       identifier: createGroupMember.identifier,
-      role: createGroupMember.role as RoleType,
+      role: getRoleTypeFromString(createGroupMember.role),
       userIdentifier: createGroupMember.userIdentifier,
       groupIdentifier: createGroupMember.groupIdentifier,
     });
@@ -42,7 +45,7 @@ export class PrismaGroupMemberRepository
 
     return new GroupMember({
       identifier: updatedGroupMember.identifier,
-      role: updatedGroupMember.role as RoleType,
+      role: getRoleTypeFromString(updatedGroupMember.role),
       joinedAt: updatedGroupMember.joinedAt,
       userIdentifier: updatedGroupMember.userIdentifier,
       groupIdentifier: updatedGroupMember.groupIdentifier,
@@ -54,9 +57,13 @@ export class PrismaGroupMemberRepository
       where: { identifier: identifier },
     });
 
+    if (!groupMember) {
+      throw new EntityNotFoundError('GroupMember not found');
+    }
+
     return new GroupMember({
       identifier: groupMember.identifier,
-      role: groupMember.role as RoleType,
+      role: getRoleTypeFromString(groupMember.role),
       joinedAt: groupMember.joinedAt,
       userIdentifier: groupMember.userIdentifier,
       groupIdentifier: groupMember.groupIdentifier,
@@ -70,7 +77,7 @@ export class PrismaGroupMemberRepository
       (groupMember) =>
         new GroupMember({
           identifier: groupMember.identifier,
-          role: groupMember.role as RoleType,
+          role: getRoleTypeFromString(groupMember.role),
           joinedAt: groupMember.joinedAt,
           userIdentifier: groupMember.userIdentifier,
           groupIdentifier: groupMember.groupIdentifier,
@@ -87,7 +94,7 @@ export class PrismaGroupMemberRepository
   async findByUserAndGroup(
     userIdentifier: string,
     groupIdentifier: string
-  ): Promise<GroupMember | null> {
+  ): Promise<GroupMember> {
     const groupMember = await this.prismaService.groupMember.findFirst({
       where: {
         userIdentifier: userIdentifier,
@@ -95,11 +102,13 @@ export class PrismaGroupMemberRepository
       },
     });
 
-    if (!groupMember) return null;
+    if (!groupMember) {
+      throw new EntityNotFoundError('GroupMember not found');
+    }
 
     return new GroupMember({
       identifier: groupMember.identifier,
-      role: groupMember.role as RoleType,
+      role: getRoleTypeFromString(groupMember.role),
       joinedAt: groupMember.joinedAt,
       userIdentifier: groupMember.userIdentifier,
       groupIdentifier: groupMember.groupIdentifier,

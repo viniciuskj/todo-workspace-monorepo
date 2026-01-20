@@ -4,6 +4,7 @@ import { PrismaUserRepository } from './repositories/PrismaUserRepository';
 import { PrismaTaskRepository } from './repositories/PrismaTaskRepository';
 import { PrismaSubTaskRepository } from './repositories/PrismaSubTaskRepository';
 import { PrismaCommentRepository } from './repositories/PrismaCommentRepository';
+import { PrismaGroupRepository } from './repositories/PrismaGroupRepository';
 import { PrismaGroupMemberRepository } from './repositories/PrismaGroupMemberRepository';
 import {
   DOMAIN_USER_REPOSITORY,
@@ -35,7 +36,7 @@ import {
     },
     {
       provide: DOMAIN_GROUP_REPOSITORY,
-      useClass: PrismaGroupMemberRepository,
+      useClass: PrismaGroupRepository,
     },
     {
       provide: DOMAIN_GROUPMEMBER_REPOSITORY,

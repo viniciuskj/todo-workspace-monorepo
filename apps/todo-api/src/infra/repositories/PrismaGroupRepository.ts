@@ -15,8 +15,6 @@ export class PrismaGroupRepository implements DomainGroupRepository {
         name: entity.name,
         isPersonal: entity.isPersonal,
         createdByIdentifier: entity.createdBy,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
       },
     });
 
@@ -37,8 +35,6 @@ export class PrismaGroupRepository implements DomainGroupRepository {
         name: entity.name,
         isPersonal: entity.isPersonal,
         createdByIdentifier: entity.createdBy,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
       },
     });
 
