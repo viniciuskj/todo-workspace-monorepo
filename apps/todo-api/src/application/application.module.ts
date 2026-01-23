@@ -14,6 +14,10 @@ import { DomainSubTaskService } from '../domain/services/DomainSubTaskService';
 import { CommentController } from './controllers/CommentController';
 import { DomainCommentService } from '../domain/services/DomainCommentService';
 import { GroupAccessGuard } from './auth/auth.group.guard';
+import { GroupController } from './controllers/GroupController';
+import { DomainGroupMemberService } from '../domain/services/DomainGroupMemberService';
+import { GrouMemberController } from './controllers/GrouMemberController';
+import { DomainGroupService } from '../domain/services/DomainGroupService';
 
 @Module({
   imports: [
@@ -29,12 +33,16 @@ import { GroupAccessGuard } from './auth/auth.group.guard';
     TaskController,
     SubTaskController,
     CommentController,
+    GroupController,
+    GrouMemberController,
   ],
   providers: [
     DomainUserService,
     DomainTaskService,
     DomainSubTaskService,
     DomainCommentService,
+    DomainGroupMemberService,
+    DomainGroupService,
     AuthService,
     {
       provide: APP_GUARD,
